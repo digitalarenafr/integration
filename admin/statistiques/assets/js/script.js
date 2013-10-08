@@ -3,10 +3,14 @@ var app = (function(){
         this.articles = [], this.comments = [];
 
         this.getAll = function(){
-            var semainesNumber = 53;
-            for (var i = 1; i < semainesNumber; i++) {
-                this.articles.push({x:i, y:Math.round(Math.random()*50)});
-                this.comments.push({x:i, y:Math.round(Math.random()*50)});
+
+            for(var comment in weekcomment)
+            {
+                this.comments.push({x:weekcomment[comment].period, y:weekcomment[comment].number});
+            }
+            for(var article in weekArticle)
+            {
+                this.articles.push({x:weekArticle[article].period, y:weekArticle[article].number});
             }
             return [
                 {values: this.articles, key:"Commentaires", area:true},
@@ -103,7 +107,7 @@ var app = (function(){
     })();
 
 
-defaultLineConfig("chart-weeks", app.getAll);
+
 function defaultLineConfig(containerid, data, guideline, auxOptions) {
 if (auxOptions === undefined) auxOptions = {};
 if (guideline === undefined) guideline = true;
@@ -164,6 +168,8 @@ obj[3].values = app.getMinComment;
 
 return obj;
 }
+
+defaultLineConfig("chart-weeks", app.getAll);
 
 nv.addGraph(function() {
     var chart;
